@@ -1,0 +1,110 @@
+\subsection{Descomposición matricial}
+La descomposición en valores singulares para matrices es un corolario directo del resultado para operadores lineales.
+
+\begin{definition}[Matriz diagonal]
+	Una matriz $A \in M_{m\times n}(\K)$ es diagonal si todas sus entradas son $0$ salvo quizás $A_{kk}$ para todo $k=1,\dots,\min\{n,m\}$.
+\end{definition}
+
+\begin{proposition}[Versión matricial de la descomposición en valores singulares]
+	Sea $A\in M_{m\times n}(\R)$. Entonces, $A$ puede ser expresada como
+	\[
+		A=U\Sigma V^{\top},
+	\]
+	donde $U\in M_{m\times m}(\R)$, $V\in M_{n\times n}(\R)$ son ortogonales y $\Sigma \in M_{m\times n}(\R)$ es diagonal con entradas no negativas en orden no creciente.
+\end{proposition}
+
+\begin{proof}
+	Sea $T:\R^n \rightarrow \R^m$ la aplicación lineal cuya representación matricial respecto de las bases canónicas es $A$. Sea $r$ el rango de $A$ y
+	\[
+		T(x)=\sigma_1\ip{x,v_1} u_1 + \dots + \sigma_r \ip{x, v_r} u_r
+	\]
+	la descomposición en valores singulares de $T$. Amplía las familias  $(v_1,\dots,v_r)$, $(u_1,\dots,u_r)$ a bases ortonormales $\mathcal{V}$, $\mathcal{U}$ de $\R^n$ y $\R^m$, respectivamente. Así,
+	\[
+		T(v_k)=
+		\begin{cases}
+			\sigma_k u_k, & 1\leq k\leq r, \\
+			0,            & r<k\leq n,
+		\end{cases}
+	\]
+	por lo que $[T]_{\mathcal{V}}^{\mathcal{U}}$ es exactamente una matriz diagonal $\Sigma \in M_{m\times n}(\R)$ cuyas entradas son los valores singulares de $T$. Define ahora las matrices $U$, $V$ cuyas columnas son los vectores de las bases $\mathcal{U}$ y $\mathcal{V}$ respectivamente. Por consiguiente, $U=[\operatorname{id}_{\R^m}]_{\mathcal{U}}^{\mathcal{B}_m}$,\, $V=[\operatorname{id}_{\R^n}]_{\mathcal{V}}^{\mathcal{B}_n}$ son matrices ortogonales y
+	\[
+		A=U\Sigma V^{\top},
+	\]
+	como queríamos probar.
+\end{proof}
+
+El siguiente resultado nos permitirá descodificar la estructura de $\Sigma$, más allá de su identificación como matriz diagonal.
+
+\begin{lemma}\label{lem:auxiliar}
+	Sea $T\in \Lin{V,W}$ donde $\dim V=n$ y $\dim W=m$. Entonces:
+	\begin{enumerate}
+		\item $\dim \im (T)\leq\min\{n,m\}$.
+		\item Si $m<n$, entonces $\dim \ker(T)\geq n-m$.
+		\item Si $n<m$, entonces $\dim \im(T)^{\perp}\geq m-n$.
+	\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+	Primero, $\dim \im(T)\leq m$ puesto que $\im(T)\subset W$. Asimismo, por rango-nulidad, $\dim \im(T)=n-\dim\ker(T)\leq n$. Esto prueba (1). Para probar (2), por (1) y rango-nulidad se sigue que $\dim \ker(T)=n-\dim \im(T)\geq n-m$. Por último, como $\dim \im(T)^{\perp}=m-\dim \im(T)$, si $n<m$ entonces $\dim \im(T)^{\perp}\geq m-n$ por (1), lo que prueba (3).
+\end{proof}
+
+\begin{informal}[Interpretación de la matriz $\Sigma$]
+	Nótese que la formulación $A=U\Sigma V^{\top}$ con $U,V$ ortogonales es equivalente a $\Sigma=U^{\top}AV$. Así, $\Sigma_{ij}=u_i^{\top}Av_j$ y distinguimos dos casos:
+	\begin{enumerate}
+		\item Si $i=j$ entonces $\Sigma_{ij}=\sigma_i u_i^{\top}u_i=\sigma_i$.
+		\item Si $i\neq j$, $\Sigma_{ij}=0$ porque $u_i^{\top}Av_j=\sigma_j u_i^\top  u_j$ o bien $v_j \in \ker(A)$ o bien $u_i \in \im(A)^{\perp}$.
+	\end{enumerate}
+	Pese a que la definición de la matriz hace esto evidente, el \cref{lem:auxiliar} revela la estructura profunda de este hecho: si $m<n$, existen al menos $n-m$ columnas de ceros; si $n<m$, existen al menos $m-n$ filas de ceros.
+\end{informal}
+
+\begin{example}[Descomposición en valores singulares de una matriz $3 \times 2$]
+	Consideramos la matriz
+	\[
+		A=
+		\begin{pmatrix}
+			0 & -1       \\
+			1 & 0        \\
+			0 & \sqrt{3}
+		\end{pmatrix}.
+	\]
+	Entonces,
+	\[
+		A^{\top}A=
+		\begin{pmatrix}
+			1 & 0 \\
+			0 & 4
+		\end{pmatrix}
+	\]
+	y tomamos la base ortonormal de vectores $v_1=e_2$, $v_2=e_1$. Los valores singulares de $A$ son $\sigma_1=2, \sigma_2=1$. A continuación, definimos
+	\[
+		u_1=\frac{1}{2}Av_1=\parens*{\tfrac{-1}{2},0,\tfrac{\sqrt{3}}{2}}, \qquad
+		u_2=Av_2=\parens*{0,1,0}.
+	\]
+	Para ampliar a una base ortonormal, buscamos un vector $u_3=(x,y,z)$ tal que $y=0$, $x=\sqrt{3}z$ normalizado, por lo que además debe cumplir $z=\pm\tfrac{1}{2}$; dicho vector es $u_3=\parens*{\tfrac{\sqrt{3}}{2},0,\tfrac{1}{2}}$.
+	Así, la descomposición en valores singulares es $A=U\Sigma V^{\top}$, donde
+	\[
+		U=
+		\begin{pmatrix}
+			\frac{-1}{2}       & 0 & \frac{\sqrt{3}}{2} \\
+			0                  & 1 & 0                  \\
+			\frac{\sqrt{3}}{2} & 0 & \frac{1}{2}
+		\end{pmatrix},
+		\qquad
+		\Sigma=
+		\begin{pmatrix}
+			2 & 0 \\
+			0 & 1 \\
+			0 & 0
+		\end{pmatrix},
+		\qquad
+		V=
+		\begin{pmatrix}
+			0 & 1 \\
+			1 & 0
+		\end{pmatrix}.
+	\]
+\end{example}
+
+\begin{informal}
+	Conviene notar que, en el anterior ejemplo, si bien $A^\top A$ ya se hallaba en su forma diagonalizada, no bastaba con tomar la base ortonormal $(e_1,e_2)$. La relación ortonormal de los vectores $u_i$ solo es garantizada si $A^\top Av_i=\sigma_i^2 v_i$, pues, por definición, los valores singulares se presentan en orden decreciente.
+\end{informal}

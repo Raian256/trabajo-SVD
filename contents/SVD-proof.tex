@@ -1,0 +1,172 @@
+\chapter{Teoría}
+Asumimos que trabajamos en espacios vectoriales reales con producto interno.\\
+\section{Descomposición en valores singulares}
+\subsection{Preliminares}
+El deseo de describir un morfismo nos lleva a la idea de subespacio invariante, pero esta se limita a endomorfismos. En esta sección buscamos persuadir al lector que la idea de valores singulares es el sucesor natural al afán de extender la idea de autovalores (subespacios invariantes más simples) más allá de los endomorfismos. Esto, sin embargo, nos hará imponer más condiciones, entre ellos que la función lineal sea entre espacios con producto interno. Luego, todo espacio vectorial mencionado en esta exposición cuenta con un producto interno.\\
+Los siguientes resultados forman el ambiente que nos permite definir la noción de valor singular.
+\begin{definition}[Endomorfismo positivo]
+	Llamamos a $T\in\Lin{V}$ positivo si es autoadjunto y $\ip{Tv,v}\geq 0$ para todo $v\in V$
+\end{definition}
+\begin{lemma}
+	Todos los autovalores de un endomorfismo auto-adjunto son reales.
+\end{lemma}
+\begin{proof}
+	Considera la complexificación de $T$ y $V$. Sea $\lambda\in\C$ un autovalor y $v\in V$ un autovector asociado. Al ser autoadjunto se da la siguiente cadena de igualdades \[
+		\lambda \ip{v,v}=\ip{\lambda v, v}=\ip{Tv,v}=\ip{v,Tv}=\ip{v,\lambda v}=\overline{\lambda}\ip{v,v},
+	\] donde hemos usado que el producto interno es lineal conjugado en la segunda entrada; como $v\neq 0$, $\ip{v,v}\neq 0$ y $\lambda=\overline{\lambda}$.
+\end{proof}
+Ahora que sabemos que los autovalores de un autoadjunto son reales, podemos demostrar la siguiente caracterización. Solo necesitamos una de las direcciones.
+\begin{proposition}
+	Un endomorfismo es positivo si y solo si es autoadjunto y todos sus autovalores son no negativos.
+\end{proposition}
+\begin{proof}
+	Sea $T\in\Lin{V}$ positivo, $v\in V$ un autovector y $\lambda\in \R$ su autovalor asociado, tenemos que \[
+		0\leq \ip{Tv,v}=\ip{\lambda v,v }=\lambda \ip{v,v},
+	\]
+	como $\ip{.,.}$ es positivo definido, $\lambda\geq 0$. Por definición de positivo es auto-adjunto.\\
+	Sea $T\in\Lin{V}$ autoadjunto y con todos sus autovalores no negativos, por el teorema real del espectro existe una base ortonormal $v_1,\ldots,v_n$ compuesta por autovectores de $T$; para $v\in V$ sean $a_1,\ldots,a_n$ sus coordenadas en esa base, entonces $Tv=\sum_{i=1}^n a_i(\lambda_i v_i)$, donde $\lambda_i$ es el autovalor asociado a $v_i$; luego \[
+		\ip{Tv, v}=\ip{\sum_{i=1}^n a_i(\lambda_i v_i),\sum_{j=1}^n a_jv_j}=\sum_{i=1}^n\sum_{j=1}^n a_i\lambda_i a_j \ip{v_i,v_j},
+	\] como la base es ortonormal $\ip{Tv,v}=\sum_{i=1}^n a_i^2 \lambda_i$ que es una suma cuyos terminos son no negativos.
+\end{proof}
+\begin{proposition}\label{prop:relación_con_endomorfismo_inducido}
+	Sea $T\in \Lin{V,W}$, entonces
+	\begin{enumerate}
+		\item $\adj{T} T$ es positivo,
+		\item $\ker \adj{T} T=\ker T$,
+		\item $\im \adj{T} T =\im \adj{T}$,
+		\item $\dim \im T=\dim \im \adj{T}=\dim \im \adj{T} T$.
+	\end{enumerate}
+\end{proposition}
+\begin{proof}
+	\leavevmode
+	\begin{enumerate}
+		\item Se verifica que es auto-adjunto $\adj{(\adj T T)}=\adj T\adj{(\adj T)}=\adj T T$. Sea $v\in V$, entonces \[
+			      \ip{(\adj T T)v,v}=\ip{\adj T (Tv),v}=\ip{Tv, Tv} \geq 0,
+		      \] donde la desigualdad se da al ser el producto interno positivo definido. Con esto, es un endomorfismo positivo.
+		\item La inclusión $\ker T \subseteq \ker \adj T T$ es inmediata. Sea $v\in \ker \adj T T$, en la demostración anterior hemos visto que $\ip{(\adj T T)v,v}=\ip{Tv,Tv}$ y como $0=\ip{(\adj T T)v,v}=\ip{Tv,Tv}$ y el producto interno es definido positivo $Tv=0$ y $v\in \ker T$ .
+		\item Como la imagen de un morfismo es el espacio ortoganl al kernel de su adjunta y $\adj T T$ es autoadjunto \[
+			      \im \adj T T =(\ker \adj T T)^\perp=(\ker T)^\perp=\im \adj T
+		      \], donde hemos usado además el resultado anterior.
+		\item Usamos de nuevo que la imagen de un morfismo es el subespacio perpendicular al kernel de su adjunto \[
+			      \dim \im T=\dim(\ker \adj T)^\perp=\dim W- \dim \ker \adj T=\dim\im \adj T,
+		      \] donde hemos usado la formula para las dimensiones de un subespacio ortogonal y rango-nulidad. La igualdad $\dim\im \adj{T} T =\dim\im \adj{T}$ se sigue del resultado previo.
+	\end{enumerate}
+\end{proof}
+\subsection{Valores singulares}
+\begin{definition}[Valores singulares]
+	Sea $T\in\Lin{V,W}$, sus valores singulares $\sigma_1 \geq \ldots\geq \sigma_n$ son las raíces no negativas de los autovalores de $\adj{T} T$, listados de forma decreciente e incluidos tantas veces como la dimensión del autoespacio asociado.
+\end{definition}
+El rol de los valores singulares lo dilucida los siguientes resultados y la discusión que los sigue:
+\begin{proposition}
+	Un morfismo $T$ es inyectivo si y solo si $0$ no es un valor singular.
+\end{proposition}
+\begin{proof}
+	Por definición $0$ es un valor singular si y solo $0$ es un autovalor de $\adj T T$ lo cual es equivalente a que $\ker(\adj T T-0I)=\ker \adj T T \neq \{0\} $ y como $\ker \adj T T=\ker T$, entonces $T$ es inyectivo si y solo si $0$ no es un valor singular.
+\end{proof}
+Nótese la similitud entre este resultado y el análogo para endomorfismos y autovalores.\\
+\begin{proposition}
+	El número de valores singulares positivos de un morfismo es igual a la dimensión de su imagen.
+\end{proposition}
+\begin{proof}
+	Al cumplirse $\dim\im T=\dim\im \adj T T$ basta determinar la dimensión de la imagen de este último endomorfismo, que como es auto-adjunto podemos aplicar el Teorema del Espectro: sea $v_1,\ldots,v_n$ una base ortonormal de sus autovectores.\\
+	Como $\dim\im T= \dim \spn{\adj T T v_1,\ldots, \adj T T v_n }=\dim\spn{\lambda_1 v_1, \ldots,\lambda_n v_n}$, donde $\lambda_i$ es el autovalor asociado a $v_i$.\\
+	Al ser $\adj T T$ positivo, $\lambda_i \geq 0$; si $\lambda_i=0$, entonces $\lambda_i v_i=0$ y $\spn{\lambda_1 v_1, \ldots, \lambda_n v_n} = \spn{\lambda_j v_j : \lambda_j \neq 0}$. Una vez eliminados los ceros, estamos ante una lista que resulta de escalar por valores distintos de cero los vectores de una base, luego sigue siendo esta linealmente independiente. Luego, como el número de valores singulares positivos es exactamente el de autovalores positivos de $\adj T T$, la dimensión de $\im T$ es el número de estos (contando repeticiones, como bien es parte de la definición).
+\end{proof}
+\begin{proposition}
+	Un endomorfismo $T$ es ortogonal si y solo si todos sus valores singulares son $1$.
+\end{proposition}
+\begin{proof}
+	Los siguientes enunciados son equivalentes: $T$ es ortogonal, $\adj T T=I$, todos los autovalores de $\adj T T$ son $1$, todos los valores singulares de $T$ son 1. Donde hemos usado el hecho de que $\adj T T$ es auto-adjunto para aplicarle el Teorema del Espectro.
+\end{proof}
+\subsection{Rol de los valores singulares}
+La sección anterior introdujo los valores singulares como objetos definibles; queda por justificar que merecen ese estatus. La comparación con la lista de autovalores, resumida en el siguiente cuadro, organiza la discusión.
+
+\begin{table}[h]
+	\centering
+	\renewcommand{\arraystretch}{1.35}
+	\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}X
+		>{\raggedright\arraybackslash}X@{}}
+		\toprule
+		\textbf{Lista de autovalores}
+		 & \textbf{Lista de valores singulares}                          \\
+		\midrule
+		Contexto: espacios vectoriales
+		 & Contexto: espacios con producto interno                       \\
+		\addlinespace
+		Definidos solo para morfismos de un espacio vectorial en sí mismo
+		 & Definidos para morfismos entre espacios con producto interno,
+		posiblemente distintos                                           \\
+		\addlinespace
+		Pueden ser números reales arbitrarios (si $\mathbb{F}=\R$) o complejos
+		(si $\mathbb{F}=\C$)
+		 & Son números no negativos                                      \\
+		\addlinespace
+		La lista puede ser vacía si $\mathbb{F}=\R$
+		 & La longitud de la lista coincide con la dimensión del dominio \\
+		\addlinespace
+		Contiene a $0 \iff$ el endomorfismo no es invertible
+		 & Contiene a $0 \iff$ el morfismo no es inyectivo               \\
+		\addlinespace
+		Sin orden estándar, en particular si $\mathbb{F}=\C$
+		 & Siempre listados en orden decreciente                         \\
+		\bottomrule
+	\end{tabularx}
+	\caption{Comparación entre autovalores y valores singulares.}
+	\label{tab:autovalores_vs_singulares}
+\end{table}
+
+\paragraph{El precio.} La definición y existencia de $\adj T$ requiere un producto interno, luego también la de $\adj T T$ y, con ella, la de los valores singulares. Esta es la única condición adicional que pagamos frente al marco de
+autovalores.
+\paragraph{Buen comportamiento aritmético.} Tres propiedades de la lista
+de valores singulares la distinguen cualitativamente de la de autovalores,
+y todas ellas son ventajas. Primero, son números reales no negativos.
+luego admiten una interpretación natural como factores de magnitud, significado que precisaremos con el teorema SVD. Segundo, la lista tiene
+siempre longitud $\dim V$. Sobre $\R$ un endomorfismo puede no tener ningún
+autovalor (la rotación de $\R^2$ por $\pi/2$ no fija ninguna recta), pero
+todo morfismo entre espacios reales con producto interno tiene exactamente
+$\dim V$ valores singulares contando multiplicidades; en el ejemplo de la
+rotación ambos son iguales a $1$, captando la información geométrica de
+que se trata de una isometría, información que los autovalores reales no
+podían registrar. Tercero, están totalmente ordenados: por convención se
+listan de forma decreciente, lo cual da sentido a expresiones como
+\emph{el mayor valor singular} o \emph{los $k$ mayores valores singulares}.
+Esta jerarquía es la base de las aplicaciones más importantes de la
+teoría (aproximación de rango bajo, que más tarde desarrollaremos) y carece de análogo para autovalores complejos.
+
+\paragraph{Lo que detectan.} Las proposiciones de la subsección anterior
+muestran que los valores singulares codifican propiedades estructurales
+del morfismo: $0$ aparece en la lista si y solo si $T$ no es inyectiva,
+el número de valores singulares positivos coincide con $\dim\im T$, y
+todos los valores singulares son iguales a $1$ si y solo si $T$ es
+ortogonal. El paralelo con autovalores es claro: $0$ es autovalor si y
+solo si el operador no es invertible. Para endomorfismos, no-invertibilidad
+equivale a no-inyectividad por la fórmula rango-nulidad, luego ambos
+criterios coinciden en el contexto donde ambos están definidos. La
+diferencia decisiva es que el criterio de los valores singulares conserva
+sentido cuando $V\neq W$, donde \emph{invertible} deja de aplicarse e
+\emph{inyectivo} toma su lugar como la noción adecuada.
+
+\paragraph{Hacia la descomposición.} Las propiedades anteriores adquieren
+significado geométrico pleno mediante el teorema que demostraremos a
+continuación: existen bases ortonormales de $V$ y $W$ tales que $T$ envía
+cada vector de la primera a un múltiplo escalar de un vector de la segunda,
+siendo precisamente los $\sigma_i$ los factores de escala. Los valores
+singulares son, así, las longitudes a lo largo de las cuales $T$ estira
+direcciones ortogonales privilegiadas.
+
+\subsection{Descomposición de un morfismo}
+\begin{theorem}[SVD para morfismos]
+	Sea $T\in \Lin{V,W}$ y sus valores singulares positivos $\sigma_1,\ldots,\sigma_m$, entonces existen listas ortonormales $v_1,\ldots,v_m$ en $V$ y $u_1,\ldots,u_m$ en $W$ tal que \[
+		Tx=\sigma_1\ip{x,v_1}u_1+\ldots+ \sigma_m\ip{x,v_m}u_m
+	\]
+\end{theorem}
+\begin{proof}
+	Como $\adj T T$ es auto-adjunto, por el Teorema del espectro existe una base ortonormal $v_1,\ldots,v_n$ de autovectores; sea $\sigma_i=\sqrt{\lambda_i}$ el valor singular de $T$ asociado al autovalor asociado a $v_i$, entonces $\adj T T v_i=\sigma_i^2 v_i$.\\
+	Define $u_i=\frac{1}{\sigma_i}Tv_i$ para $i\in \{1,\ldots,m\}$, es decir para los positivos; verificamos que esto genera una lista ortonormal: si $j,k\in \{1,\ldots,m\}$ entonces \[
+		\ip{u_j, u_k} = \frac{1}{\sigma_j \sigma_k} \ip{Tv_j, Tv_k} = \frac{1}{\sigma_j \sigma_k} \ip{v_j, T^*Tv_k} = \frac{\sigma_k}{\sigma_j} \ip{v_j, v_k} = \begin{cases} 0 & \text{if } j \neq k, \\ 1 & \text{if } j = k. \end{cases}
+	\]
+	Para $k\in\{m+1,\ldots,n\}$, al estar los valores singulares ordenados de forma decreciente, se tiene $\sigma_k=0$, luego $\adj T T v_k=\sigma_k^2 v_k=0$; junto a la igualdad $\ker \adj T T=\ker T$ (\cref{prop:relación_con_endomorfismo_inducido}) esto implica $Tv_k=0$.\\
+	Sea $x\in V$, al ser $v_1,\ldots,v_n$ una base ortonormal $x=\sum_{i=1}^n \ip{x,v_i}v_i$, luego \[
+		Tx= \sum_{i=1}^n \ip{x,v_i}Tv_i = \sum_{i=1}^m \ip{x,v_i}Tv_i= \sum_{i=1}^m \sigma_i\ip{x,v_i}u_i,
+	\] donde la segunda igualdad se debe a que $Tv_k=0$ para $k>m$ y la tercera a la definición de $u_i$.
+\end{proof}

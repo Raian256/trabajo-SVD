@@ -1,0 +1,117 @@
+\documentclass[12pt,oneside]{scrreport} % KOMA: mejor tipografía, buen control de capítulos
+
+% --- Idioma y tipografía ---
+\usepackage{newpxtext} % classy typography
+\usepackage{fontspec}        % fuentes del sistema (LuaLaTeX)
+\usepackage{mathtools}       % antes de unicode-math (requerido)
+\usepackage{amsthm}          % antes de unicode-math para que thmtools detecte el backend
+\usepackage{unicode-math}    % fuentes matemáticas unicode; provee \symbf; reemplaza amssymb
+\usepackage{microtype}       % mejor espaciado
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{csquotes}        % cargar después de babel
+
+% --- Página ---
+\usepackage[a4paper,margin=2.6cm]{geometry}
+
+% --- Matemáticas ---
+% mathtools cargado arriba (antes de unicode-math); amssymb reemplazado por unicode-math
+\usepackage{thmtools}        % estilos/refinamientos para teoremas
+\numberwithin{equation}{section}
+
+% Teoremas y amigos (numera por sección; todos comparten contador)
+\declaretheoremstyle[
+	headfont=\bfseries,
+	bodyfont=\itshape,
+	spaceabove=6pt, spacebelow=6pt, headpunct=.
+]{thmstyle}
+\declaretheorem[style=thmstyle,numberwithin=section,name=Teorema]{theorem}
+\declaretheorem[style=remark,sibling=theorem,name=Informal]{informal}
+\declaretheorem[style=thmstyle,sibling=theorem,name=Lema]{lemma}
+\declaretheorem[style=thmstyle,sibling=theorem,name=Proposición]{proposition}
+\declaretheorem[style=definition,sibling=theorem,name=Definición]{definition}
+\declaretheorem[style=remark,sibling=theorem,name=Ejemplo]{example}
+\declaretheorem[style=remark,sibling=theorem,numbered=no,name=Ejercicio]{exercise}
+\declaretheorem[style=remark,sibling=theorem,numbered=no,name=Insight]{insight}
+
+\newenvironment{solution}{\begin{proof}[Solución]\let\qed\relax}{\end{proof}}
+
+% --- Cajas de teoremas ---
+\usepackage[skins,breakable]{tcolorbox}
+
+\tcbset{
+	thmbase/.style={
+			enhanced,
+			breakable,
+			sharp corners,
+			frame hidden,
+			left=6pt, right=4pt, top=3pt, bottom=3pt,
+			before skip=8pt, after skip=8pt,
+		}
+}
+
+% % Azul — resultados (teoremas, lemas, proposiciones)
+\tcolorboxenvironment{theorem}{thmbase,
+	borderline west={3pt}{0pt}{blue!70!black}, colback=blue!5!white}
+\tcolorboxenvironment{lemma}{thmbase,
+	borderline west={3pt}{0pt}{blue!70!black}, colback=blue!5!white}
+\tcolorboxenvironment{proposition}{thmbase,
+	borderline west={3pt}{0pt}{blue!70!black}, colback=blue!5!white}
+
+% Verde azulado — definiciones
+\tcolorboxenvironment{definition}{thmbase,
+	borderline west={3pt}{0pt}{teal!80!black}, colback=teal!5!white}
+
+% Naranja — ejemplos
+\tcolorboxenvironment{example}{thmbase,
+	borderline west={3pt}{0pt}{orange!80!black}, colback=white}
+
+% Gris — informal, insight
+\tcolorboxenvironment{informal}{thmbase,
+	borderline west={3pt}{0pt}{gray!55!black}, colback=gray!5!white}
+\tcolorboxenvironment{insight}{thmbase,
+	borderline west={3pt}{0pt}{gray!55!black}, colback=white}
+
+% --- Referencias y PDF ---
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, linkcolor=blue!60!black, urlcolor=blue!60!black}
+\usepackage[capitalise,noabbrev,nameinlink]{cleveref}
+% Spanish names for theorem-like environments:
+\crefname{theorem}{Teorema}{Teoremas}
+\crefname{lemma}{Lema}{Lemas}
+\crefname{proposition}{Proposición}{Proposiciones}
+\crefname{corollary}{Corolario}{Corolarios}
+\crefname{definition}{Definición}{Definiciones}
+\crefname{example}{Ejemplo}{Ejemplos}
+% spanish Prueba instead of proof 
+\renewcommand{\proofname}{Prueba}
+
+% to reference steps in proofs/solutions
+\newcounter{proofstep}
+\newcommand{\step}[1]{%
+	\refstepcounter{proofstep}\label{#1}\textbf{(\theproofstep) }\ignorespaces}
+
+\AtBeginEnvironment{proof}{\setcounter{proofstep}{0}}
+\AtBeginEnvironment{solution}{\setcounter{proofstep}{0}}
+
+% Make \cref{<proofstep-label>} print "(n)"
+\crefformat{proofstep}{(#2#1#3)}
+
+% Let TeX fix small overruns instead of whining
+%\emergencystretch=2em   % extra stretch on the last pass (very effective)
+%\hfuzz=2pt              % ignore overfull < 2pt (tune to 3pt if you like)
+%\hbadness=3000          % reduce underfull warnings sin silenciarlos todos
+
+% to use enum with letters
+\usepackage{enumitem}
+% --- Gráficos ---
+\usepackage{graphicx}
+\usepackage{subcaption}
+\graphicspath{{figures/}}
+% fancy plots
+% \usepackage{tikz}
+% \usetikzlibrary{arrows.meta,calc}
+% --- Macros del curso ---
+\input{./macros.tex}
+% tablas
+\usepackage{booktabs}
+\usepackage{tabularx}
