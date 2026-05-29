@@ -1,0 +1,18 @@
+\addchap{Notación}
+
+Trabajamos en espacios vectoriales reales de dimensión finita con producto
+interno. Fijamos los convenios siguientes, que son los propios de este trabajo;
+la notación habitual ($\ker$, $\im$, $\tr$, $\rk$, $\norm{\cdot}$,
+$\ip{\cdot,\cdot}$, $S^{\perp}$, \ldots) se usa sin más aviso.
+
+\begin{description}[leftmargin=6.5em,style=nextline,itemsep=2pt]
+	\item[$\Lin{V,W}$] aplicaciones lineales de $V$ en $W$; $\Lin{V}=\Lin{V,V}$.
+	\item[$\adj{T}$] adjunta de $T$, caracterizada por $\ip{Tv,w}=\ip{v,\adj{T}w}$.
+	\item[{$[T]_{\mathcal{V}}^{\mathcal{U}}$}] matriz de $T$ en las bases ortonormales $\mathcal{V}$ de $V$ y $\mathcal{U}$ de $W$.
+	\item[$A=U\Sigma V^{\top}$] SVD de $A$: $U,V$ ortogonales y $\Sigma$ diagonal con entradas no negativas en orden no creciente.
+	\item[$\sigma_1\geq\cdots\geq\sigma_n\geq0$] valores singulares, en orden decreciente y repetidos según multiplicidad. Escribimos $\sigma_j(M)$ para el $j$-ésimo valor singular de una matriz $M$, con el convenio $\sigma_j(M)=0$ si $j>\rk M$.
+	\item[$u_i,\,v_i$] vectores singulares izquierdo y derecho ($i$-ésimas columnas de $U$ y $V$).
+	\item[$A_k$] truncamiento $A_k=\sum_{i=1}^{k}\sigma_i u_i v_i^{\top}$, la mejor aproximación de rango $k$ a $A$.
+	\item[modo] cada sumando de rango uno $\sigma_i u_i v_i^{\top}$.
+	\item[$\norm{\cdot}_2,\ \norm{\cdot}_F$] norma espectral y norma de Frobenius.
+\end{description}
